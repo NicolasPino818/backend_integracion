@@ -1,4 +1,6 @@
 antes de hacer el pip install -> hay que iniciar un entorno virtual con:
+
+¡el entorno tiene que estar dentro de la carpeta RAIZ (la que contiene api_rest, .gitignore y manage.py)!
 python3 -m venv .venv
 
 despues hay que iniciar el entorno con:
@@ -8,6 +10,8 @@ despues hay que iniciar el entorno con:
 CON LOS DOS PUNTITOS!
 
 Para cerrar el entorno virtual solo hay que escribir: deactivate , en la consola estando ya dentro del entorno.
+
+para iniciar el server de dejango hay que ejecutar el comando: python manage.py runserver (estando dentro del entorno virtual)
 
 Para hacer que django reconozca los cambios hechos hay que usar el comando: python manage.py migrate
 
@@ -23,6 +27,6 @@ para hacer un commit a git:
 Paquetes del proyecto:
 
 pip install django
-pip instal djangorestframework
+pip install djangorestframework
 pip install mysqlclient
 pip install bcrypt

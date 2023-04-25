@@ -1,0 +1,28 @@
+antes de hacer el pip install -> hay que iniciar un entorno virtual con:
+python3 -m venv .venv
+
+despues hay que iniciar el entorno con:
+
+. .venv/scripts/activate  
+
+CON LOS DOS PUNTITOS!
+
+Para cerrar el entorno virtual solo hay que escribir: deactivate , en la consola estando ya dentro del entorno.
+
+Para hacer que django reconozca los cambios hechos hay que usar el comando: python manage.py migrate
+
+
+para hacer un commit a git:
+
+1. python manage.py migrate
+2. git add .
+3. git commit -m "mensaje de commit"
+4. git push
+
+
+Paquetes del proyecto:
+
+pip install django
+pip instal djangorestframework
+pip install mysqlclient
+pip install bcrypt

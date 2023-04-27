@@ -1,7 +1,7 @@
 antes de hacer el pip install -> hay que iniciar un entorno virtual con:
 
 ¡el entorno tiene que estar dentro de la carpeta RAIZ (la que contiene api_rest, .gitignore y manage.py)!
-python3 -m venv .venv
+python -m venv .venv
 
 despues hay que iniciar el entorno con:
 

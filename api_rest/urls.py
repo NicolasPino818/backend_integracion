@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from api_rest import views
 
 # Aqui es donde vamos a poner los endpoints para poder enviar y recibir informacion en la api
 urlpatterns = [

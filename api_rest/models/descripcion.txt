@@ -1,1 +1,0 @@
-Los modelos son para decirle a django como son las tablas de la base de datos y asi poder usarlas

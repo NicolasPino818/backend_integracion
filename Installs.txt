@@ -30,3 +30,5 @@ pip install django
 pip install djangorestframework
 pip install mysqlclient
 pip install bcrypt
+pip install django-cors-headers
+pip install requests

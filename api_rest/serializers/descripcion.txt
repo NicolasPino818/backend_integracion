@@ -1,1 +1,0 @@
-Los serializers nos permiten transformar los objetos JSON en objetos de python y viceversa

@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from api_rest import views
 
+base = 'api/'
+
 # Aqui es donde vamos a poner los endpoints para poder enviar y recibir informacion en la api
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(base+"data/", views.getData)
 ]

@@ -50,3 +50,8 @@ def getDolarRate(date):
     header = {'apikey': 'kdN9eoYAtibCjxAky7HdhlA7xtFTZi78'}
 
     return requests.get(f"https://api.apilayer.com/fixer/{date}?symbols=USD&base=CLP", headers=header)
+
+
+api_view(['POST'])
+def login(request):
+    pass

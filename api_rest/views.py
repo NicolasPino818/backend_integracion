@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import *
@@ -8,8 +9,6 @@ import requests
 import json
 
 api_view(['GET'])
-
-
 def getData(request):
     data = Data.objects.last()
     serializer = DataSerializer(data)
@@ -53,5 +52,20 @@ def getDolarRate(date):
 
 
 api_view(['POST'])
-def login(request):
-    pass
+@csrf_exempt
+def login_user(request):
+
+    print(request.body)
+
+    try:
+        usuario = request.data['user']
+        passw = request.data['passw']
+    except:
+        return JsonResponse({"success":False}, status = status.HTTP_400_BAD_REQUEST)
+    
+    usuario = Usuarios.objects.filter(usuario = usuario)
+
+    serializer = LoginSerializer(usuario)
+
+    if request.method == 'POST':
+        return JsonResponse({"success":True, "data":  serializer.data})

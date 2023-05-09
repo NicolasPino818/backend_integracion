@@ -17,4 +17,4 @@ class DataSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model: Usuarios
-        fields = ['id','usuario','correo','passw']
+        fields = ['id','usuario','passw']

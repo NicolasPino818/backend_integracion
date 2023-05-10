@@ -72,7 +72,7 @@ def login_user(request):
             else:
                 return JsonResponse({"success": False, "reason": "wrong password"}, safe=False, status=status.HTTP_200_OK)
     else:
-        return JsonResponse({"success": False, "reason": "wrong email"}, safe=False, status=status.HTTP_200_OK)
+        return JsonResponse({"success": False, "reason": "wrong user"}, safe=False, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -123,7 +123,7 @@ def getProductsByCategory(request, category):
             return JsonResponse({"success": True, "message": "no products in this category"}, status=status.HTTP_200_OK)
 
     else:
-        return JsonResponse({"success": False}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({"success": False, "message": "unkown category"}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])

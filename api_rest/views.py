@@ -50,3 +50,25 @@ def getDolarRate(date):
     header = {'apikey': 'kdN9eoYAtibCjxAky7HdhlA7xtFTZi78'}
 
     return requests.get(f"https://api.apilayer.com/fixer/{date}?symbols=USD&base=CLP", headers=header)
+
+
+
+@api_view(['POST'])
+def login_user(request):
+
+    requestCorreo = request.data['correo']
+    requestPassw = request.data['passw']
+
+    cuenta = Cuentas.objects.filter(correo=requestCorreo).values()
+
+    if cuenta.count() > 0:
+
+        if request.method == 'POST':
+            serializer = LoginSerializer(cuenta[0])
+
+            if serializer.data['passw'] == requestPassw:
+                return JsonResponse({"success": True}, safe=False, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({"success": False, "reason": "wrong password"}, safe=False, status=status.HTTP_200_OK)
+    else:
+        return JsonResponse({"success": False, "reason": "wrong email"}, safe=False, status=status.HTTP_200_OK)

@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import *
@@ -52,14 +53,13 @@ def getDolarRate(date):
     return requests.get(f"https://api.apilayer.com/fixer/{date}?symbols=USD&base=CLP", headers=header)
 
 
-
 @api_view(['POST'])
 def login_user(request):
 
     requestCorreo = request.data['correo']
     requestPassw = request.data['passw']
 
-    cuenta = Cuentas.objects.filter(correo=requestCorreo).values()
+    cuenta = Usuarios.objects.filter(correo=requestCorreo).values()
 
     if cuenta.count() > 0:
 
@@ -72,3 +72,25 @@ def login_user(request):
                 return JsonResponse({"success": False, "reason": "wrong password"}, safe=False, status=status.HTTP_200_OK)
     else:
         return JsonResponse({"success": False, "reason": "wrong email"}, safe=False, status=status.HTTP_200_OK)
+
+
+"""
+api_view(['POST'])
+@csrf_exempt
+def login_user(request):
+
+    print(request.body)
+
+    try:
+        usuario = request.data['user']
+        passw = request.data['passw']
+    except:
+        return JsonResponse({"success":False}, status = status.HTTP_400_BAD_REQUEST)
+    
+    usuario = Usuarios.objects.filter(usuario = usuario)
+
+    serializer = LoginSerializer(usuario)
+
+    if request.method == 'POST':
+        return JsonResponse({"success":True, "data":  serializer.data})
+"""

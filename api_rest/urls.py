@@ -22,5 +22,6 @@ base = 'api/'
 
 # Aqui es donde vamos a poner los endpoints para poder enviar y recibir informacion en la api
 urlpatterns = [
-    path(base+"data/", views.getData)
+    path(base+"data/", views.getData),
+    path(base+"login/", views.login_user),
 ]

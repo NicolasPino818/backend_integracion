@@ -12,3 +12,9 @@ class DataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Data
         fields = ['id', 'usd_clp', 'fecha_actualizacion']
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: Usuarios
+        fields = ['id','usuario','passw']

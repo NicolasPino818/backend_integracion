@@ -24,4 +24,5 @@ base = 'api/'
 urlpatterns = [
     path(base+"data/", views.getData),
     path(base+"login/", views.login_user),
+    path(base+'products/<str:category>', views.getProductsByCategory)
 ]

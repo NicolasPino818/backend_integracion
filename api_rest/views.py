@@ -4,13 +4,11 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import *
 from .serializers import *
-from datetime import datetime, timezone, date
+from datetime import date
 import requests
-import json
-
-api_view(['GET'])
 
 
+@api_view(['GET'])
 def getData(request):
     data = Data.objects.last()
     serializer = DataSerializer(data)
@@ -56,17 +54,20 @@ def getDolarRate(date):
 @api_view(['POST'])
 def login_user(request):
 
-    requestCorreo = request.data['correo']
-    requestPassw = request.data['passw']
+    try:
+        usuario = request.data['user']
+        passw = request.data['passw']
+    except:
+        return JsonResponse({"success": False}, status=status.HTTP_400_BAD_REQUEST)
 
-    cuenta = Usuarios.objects.filter(correo=requestCorreo).values()
+    cuenta = Usuarios.objects.filter(usuario=usuario).values()
 
     if cuenta.count() > 0:
 
         if request.method == 'POST':
             serializer = LoginSerializer(cuenta[0])
 
-            if serializer.data['passw'] == requestPassw:
+            if serializer.data['passw'] == passw:
                 return JsonResponse({"success": True}, safe=False, status=status.HTTP_200_OK)
             else:
                 return JsonResponse({"success": False, "reason": "wrong password"}, safe=False, status=status.HTTP_200_OK)
@@ -74,23 +75,66 @@ def login_user(request):
         return JsonResponse({"success": False, "reason": "wrong email"}, safe=False, status=status.HTTP_200_OK)
 
 
-"""
-api_view(['POST'])
-@csrf_exempt
-def login_user(request):
+@api_view(['GET'])
+def getAllMarcas(request):
+    marcas = Marcas.objects.all()
+    serializer = MarcasSerializer(marcas)
 
-    print(request.body)
+    if request.method == 'GET':
+        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def getAllCategorias(request):
+    categorias = Categorias.objects.all()
+    serializer = CategoriaSerializer(categorias)
+
+    if request.method == 'GET':
+        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def getAllProductos(request):
+    productos = Productos.objects.all()
+    serializer = ProductoSerializer(productos)
+
+    if request.method == 'GET':
+        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def getProductsByCategory(request, category):
+
+    print(category)
 
     try:
-        usuario = request.data['user']
-        passw = request.data['passw']
+        cat = Categorias.objects.filter(nom_categoria=category).values()
     except:
-        return JsonResponse({"success":False}, status = status.HTTP_400_BAD_REQUEST)
-    
-    usuario = Usuarios.objects.filter(usuario = usuario)
+        return JsonResponse({"success": False}, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = LoginSerializer(usuario)
+    if cat.count() > 0:
+        productos = Productos.objects.filter(categoria=cat[0]['id'])
 
-    if request.method == 'POST':
-        return JsonResponse({"success":True, "data":  serializer.data})
-"""
+        print(productos)
+
+        if productos.count() > 0:
+            pass
+        else:
+            return JsonResponse({"success": True, "message": "no products in this category"}, status=status.HTTP_200_OK)
+
+    else:
+        return JsonResponse({"success": False}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def productById(request, id):
+
+    try:
+        producto = Productos.objects.get(pk=id)
+    except producto.DoesNotExist:
+        return JsonResponse({"success": False}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ProductoSerializer(producto)
+
+    if request.method == 'GET':
+        return JsonResponse({"success": True, "producto": serializer.data}, safe=False, status=status.HTTP_200_OK)

@@ -16,5 +16,29 @@ class DataSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Usuarios
-        fields = ['id','usuario','passw']
+        model = Usuarios
+        fields = ['id', 'usuario', 'passw']
+
+
+class ProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Productos
+        fields = '__all__'
+
+
+class CategorySearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categorias
+        fields = ['id', 'nom_categoria']
+
+
+class MarcasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Marcas
+        fields = '__all__'
+
+
+class CategoriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categorias
+        fields = '__all__'

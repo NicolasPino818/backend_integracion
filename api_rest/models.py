@@ -19,13 +19,13 @@ class Data(models.Model):
 
 class Categorias(models.Model):
     nom_categoria = models.CharField(max_length=200)
-    foto = models.BinaryField()
-    desc = models.CharField(max_length=2500)
+    foto = models.BinaryField(null=True)
+    desc = models.CharField(max_length=2500, null=True)
 
 
 class Marcas(models.Model):
     nom_marca = models.CharField(max_length=150)
-    pais = models.CharField(max_length=150)
+    pais = models.CharField(max_length=150, null=True)
 
 
 class Usuarios(models.Model):

@@ -7,6 +7,8 @@ from .serializers import *
 from datetime import date
 import requests
 
+# Terminada
+
 
 @api_view(['GET'])
 def getData(request):
@@ -44,11 +46,15 @@ def getData(request):
                            "date": serializer.data['fecha_actualizacion'], "database": True}
             return JsonResponse(responseObj, status=status.HTTP_200_OK)
 
+# Terminada
+
 
 def getDolarRate(date):
     header = {'apikey': 'kdN9eoYAtibCjxAky7HdhlA7xtFTZi78'}
 
     return requests.get(f"https://api.apilayer.com/fixer/{date}?symbols=USD&base=CLP", headers=header)
+
+# Terminada
 
 
 @api_view(['POST'])
@@ -75,6 +81,7 @@ def login_user(request):
         return JsonResponse({"success": False, "reason": "wrong user"}, safe=False, status=status.HTTP_200_OK)
 
 
+# Terminada
 @api_view(['GET'])
 def getAllMarcas(request):
     marcas = Marcas.objects.all()
@@ -84,6 +91,7 @@ def getAllMarcas(request):
         return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
 
 
+# Terminada
 @api_view(['GET'])
 def getAllCategorias(request):
     categorias = Categorias.objects.all()
@@ -94,6 +102,17 @@ def getAllCategorias(request):
 
 
 @api_view(['GET'])
+def getCategoriasConProductos(request):
+    pass
+    """categorias = Categorias.objects.all()
+    serializer = CategoriaSerializer(categorias)
+
+    if request.method == 'GET':
+        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)"""
+
+
+# Terminada
+@api_view(['GET'])
 def getAllProductos(request):
     productos = Productos.objects.all()
     serializer = ProductoSerializer(productos)
@@ -102,10 +121,9 @@ def getAllProductos(request):
         return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
 
 
+# Terminada
 @api_view(['GET'])
 def getProductsByCategory(request, category):
-
-    print(category)
 
     try:
         cat = Categorias.objects.filter(nom_categoria=category).values()
@@ -116,8 +134,6 @@ def getProductsByCategory(request, category):
         productos = Productos.objects.filter(categoria=cat[0]['id'])
 
         serializer = ProductoSerializer(productos, many=True)
-
-        print(productos)
 
         if productos.count() > 0:
             return JsonResponse({"success": True, "products": serializer.data}, status=status.HTTP_200_OK)

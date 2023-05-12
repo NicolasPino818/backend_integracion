@@ -115,10 +115,12 @@ def getProductsByCategory(request, category):
     if cat.count() > 0:
         productos = Productos.objects.filter(categoria=cat[0]['id'])
 
+        serializer = ProductoSerializer(productos, many=True)
+
         print(productos)
 
         if productos.count() > 0:
-            pass
+            return JsonResponse({"success": True, "products": serializer.data}, status=status.HTTP_200_OK)
         else:
             return JsonResponse({"success": True, "message": "no products in this category"}, status=status.HTTP_200_OK)
 

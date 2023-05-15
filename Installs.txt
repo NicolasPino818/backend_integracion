@@ -32,3 +32,4 @@ pip install mysqlclient
 pip install bcrypt
 pip install django-cors-headers
 pip install requests
+python -m pip install Pillow

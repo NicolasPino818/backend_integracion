@@ -26,6 +26,13 @@ class ProductoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class UpdateProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Productos
+        fields = ['id', 'nom_producto', 'precio', 'precio_ofer', 'imagen', 'stock', 'desc',
+                  'color', 'trastes', 'mat_cuerpo', 'mat_neck', 'mat_fingerb', 'marca', 'categoria']
+
+
 class CategorySearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categorias

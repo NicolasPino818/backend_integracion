@@ -85,20 +85,20 @@ def login_user(request):
 @api_view(['GET'])
 def getAllMarcas(request):
     marcas = Marcas.objects.all()
-    serializer = MarcasSerializer(marcas)
+    serializer = MarcasSerializer(marcas, many=True)
 
     if request.method == 'GET':
-        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
+        return JsonResponse({"success": True, "marcas": serializer.data}, safe=False, status=status.HTTP_200_OK)
 
 
 # Terminada
 @api_view(['GET'])
 def getAllCategorias(request):
     categorias = Categorias.objects.all()
-    serializer = CategoriaSerializer(categorias)
+    serializer = CategoriaSerializer(categorias, many=True)
 
     if request.method == 'GET':
-        return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
+        return JsonResponse({"success": True, "categorias": serializer.data}, safe=False, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -115,7 +115,7 @@ def getCategoriasConProductos(request):
 @api_view(['GET'])
 def getAllProductos(request):
     productos = Productos.objects.all()
-    serializer = ProductoSerializer(productos)
+    serializer = ProductoSerializer(productos, many=True)
 
     if request.method == 'GET':
         return JsonResponse({"success": True, "productos": serializer.data}, safe=False, status=status.HTTP_200_OK)
@@ -144,7 +144,25 @@ def getProductsByCategory(request, category):
         return JsonResponse({"success": False, "message": "unkown category"}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@api_view(['POST'])
+def createProduct(request):
+
+    print(request.data)
+
+    print(request.data['imagen'])
+
+    if request.method == 'POST':
+        serializer = ProductoSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"success": True}, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return JsonResponse({"success": False}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def productById(request, id):
 
     try:
@@ -156,3 +174,15 @@ def productById(request, id):
 
     if request.method == 'GET':
         return JsonResponse({"success": True, "producto": serializer.data}, safe=False, status=status.HTTP_200_OK)
+
+    if request.method == 'DELETE':
+        producto.delete()
+        return JsonResponse({"success": True}, safe=False, status=status.HTTP_200_OK)
+    if request.method == 'PUT':
+        serializer = UpdateProductoSerializer(producto, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"success": True}, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return JsonResponse({"success": False}, status=status.HTTP_200_OK)

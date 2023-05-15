@@ -24,5 +24,10 @@ base = 'api/'
 urlpatterns = [
     path(base+"data/", views.getData),
     path(base+"login/", views.login_user),
-    path(base+'products/<str:category>', views.getProductsByCategory)
+    path(base+'products/<str:category>', views.getProductsByCategory),
+    path(base+'products/all/', views.getAllProductos),
+    path(base+'products/<int:id>/', views.productById),
+    path(base+'categorias/all/', views.getAllCategorias),
+    path(base+'marcas/all/', views.getAllMarcas),
+    path(base+'products/create/', views.createProduct),
 ]

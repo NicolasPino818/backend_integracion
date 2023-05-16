@@ -49,7 +49,7 @@ class Productos(models.Model):
     nom_producto = models.CharField(max_length=200)
     precio = models.IntegerField()
     precio_ofer = models.IntegerField(null=True, blank=True)
-    imagen = models.TextField()
+    imagen = models.TextField(null=True,blank=True)
     stock = models.IntegerField()
     fecha_creacion = models.DateField()
     desc = models.CharField(max_length=2500)
